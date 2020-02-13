@@ -84,3 +84,32 @@ func (t *TestRobot)Processor(event Event){
 
 Regist("test", &TestRobot) // test是指令名字 `/test e2e` 这样这个处理器不会处理别的指令如 `/pay 8`
 ```
+
+## 使用事例
+
+这里使用一个faas跑一个机器人的例子帮助大家理解。 这个机器人是监听issue然后去触发CI的一些pipeline的功能。
+
+比如我们为一个开发任务写了一个issue,开发人员开发完了PR过来，那么我们肯定希望跑一下测试用例再决定merge不merge。
+
+此时就可以在issue下回复：
+
+/promote 42 test key=value
+
+然后机器人就会去触发drone的事件，执行drone pipeline中目标为test的步骤，来完成测试用例运行，当然具体怎么测试会由pipeline自己决定
+
+```golang
+// hello是个http handler, github 把事件数据以json格式发送过来，已经被解析到event结构体中
+func promote(ctx context.Context, event issue.IssueCommentEvent) (string, error) {
+	// or using env: GITHUB_USER GITHUB_PASSWD
+    // github 账户名和密码，因为机器人可能还要回复issue什么的操作，这里建议单独给机器人申请个账号
+    // 不传参数就会从环境变量中读取
+	config := issue.NewConfig("sealrobot", "xxx")
+	// regist what robot your need, and the robot config
+    // 注册一下你希望哪个机器人处理，因为一条issue中可能会有很做指令，我们只关心/promote即可
+    // Drone的处理器需要知道drone的地址和token是什么
+	issue.Regist("promote", &drone_promote.DronePromote{"https://cloud.drone.io", "QSp93SmhZVpJAmb7tWPuWIOh3qs6BhuI"})
+    // 处理issue
+	err := issue.Process(config, event)
+	return fmt.Sprintf("goversionecho %s", err), nil
+}
+```
