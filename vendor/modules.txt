@@ -1,0 +1,26 @@
+# github.com/drone/drone-go v1.1.0
+github.com/drone/drone-go/drone
+# github.com/golang/protobuf v1.3.2
+github.com/golang/protobuf/proto
+# github.com/google/go-github v17.0.0+incompatible
+github.com/google/go-github/github
+# github.com/google/go-querystring v1.0.0
+github.com/google/go-querystring/query
+# github.com/tencentyun/scf-go-lib v0.0.0-20200116145541-9a6ea1bf75b8
+github.com/tencentyun/scf-go-lib/cloudfunction
+github.com/tencentyun/scf-go-lib/cloudfunction/messages
+github.com/tencentyun/scf-go-lib/functioncontext
+# golang.org/x/net v0.0.0-20200114155413-6afb5195e5aa
+golang.org/x/net/context
+golang.org/x/net/context/ctxhttp
+# golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
+golang.org/x/oauth2
+golang.org/x/oauth2/internal
+# google.golang.org/appengine v1.6.5
+google.golang.org/appengine/internal
+google.golang.org/appengine/internal/base
+google.golang.org/appengine/internal/datastore
+google.golang.org/appengine/internal/log
+google.golang.org/appengine/internal/remote_api
+google.golang.org/appengine/internal/urlfetch
+google.golang.org/appengine/urlfetch

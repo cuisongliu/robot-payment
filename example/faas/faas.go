@@ -4,13 +4,18 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/fanux/robot/processor/drone_promote"
 
 	"github.com/fanux/robot/issue"
 	"github.com/tencentyun/scf-go-lib/cloudfunction"
 )
 
 func hello(ctx context.Context, event issue.IssueCommentEvent) (string, error) {
-	err := issue.Process(event)
+	// or using env: GITHUB_USER GITHUB_PASSWD
+	config := issue.NewConfig("sealrobot", "xxx")
+	// regist what robot your need, and the robot config
+	issue.Regist("promote", &drone_promote.DronePromote{"https://cloud.drone.io", "QSp93SmhZVpJAmb7tWPuWIOh3qs6BhuI"})
+	err := issue.Process(config, event)
 	return fmt.Sprintf("goversionecho %s", err), nil
 }
 
