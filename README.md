@@ -53,37 +53,12 @@
 
 > 付款
 
-[sealos](https://github.com/fanux/sealos) 的开发者是会有一定酬劳的，maintainer会把任务分解写成issue, 然后加个 `/pay 100`指令
+ 的开发者是会有一定酬劳的，maintainer会把任务分解写成issue, 然后加个 `/pay 100`指令
 机器会首先会自动给这个issue打上`paid`标签，然后开发者开发代码PR，一旦被merge就会自动把钱转入该开发者的支付宝账户。
 
 > 其它
 
 打标签，关闭超时issue等，
-
-## 开发教程
-
-Event 中会存放事件的一些信息以及一个用于访问和操作github的client,还有触发事件的指令
-```
-type Event struct {
-    EventInfo
-    Client 
-    Command string //如 /test e2e
-}
-```
-
-以开发一个处理/test指令的处理器为例，用户只需要实现一个处理器并注册即可
-
-```
-type TestRobot struct{
-    //你需要的信息
-}
-
-func (t *TestRobot)Processor(event Event){
-    // 处理任务,监听到github事件此函数就会被回调
-}
-
-Regist("test", &TestRobot) // test是指令名字 `/test e2e` 这样这个处理器不会处理别的指令如 `/pay 8`
-```
 
 ## 使用事例
 
@@ -113,3 +88,18 @@ func promote(ctx context.Context, event issue.IssueCommentEvent) (string, error)
     return fmt.Sprintf("goversionecho %s", err), nil
 }
 ```
+
+## 扩展处理器
+
+处理器就是为了处理issue中有自己感兴趣的指令。只要实现如下接口即可
+```golang
+type Robot interface {
+	Process(event IssueEvent) error
+}
+```
+注意要想Processor生效必须要注册处理器 issue.Regist(命令,处理器)
+
+可以参考[drone-promote的实现](https://github.com/fanux/robot/blob/master/processor/drone_promote/drone_promote.go)
+
+## 友情链接
+[sealos-一键安装kubernetes HA集群](https://github.com/fanux/sealos)
