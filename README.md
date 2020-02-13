@@ -100,16 +100,16 @@ Regist("test", &TestRobot) // test是指令名字 `/test e2e` 这样这个处理
 ```golang
 // hello是个http handler, github 把事件数据以json格式发送过来，已经被解析到event结构体中
 func promote(ctx context.Context, event issue.IssueCommentEvent) (string, error) {
-	// or using env: GITHUB_USER GITHUB_PASSWD
+    // or using env: GITHUB_USER GITHUB_PASSWD
     // github 账户名和密码，因为机器人可能还要回复issue什么的操作，这里建议单独给机器人申请个账号
     // 不传参数就会从环境变量中读取
-	config := issue.NewConfig("sealrobot", "xxx")
-	// regist what robot your need, and the robot config
+    config := issue.NewConfig("sealrobot", "xxx")
+    // regist what robot your need, and the robot config
     // 注册一下你希望哪个机器人处理，因为一条issue中可能会有很做指令，我们只关心/promote即可
     // Drone的处理器需要知道drone的地址和token是什么
-	issue.Regist("promote", &drone_promote.DronePromote{"https://cloud.drone.io", "QSp93SmhZVpJAmb7tWPuWIOh3qs6BhuI"})
+    issue.Regist("promote", &drone_promote.DronePromote{"https://cloud.drone.io", "QSp93SmhZVpJAmb7tWPuWIOh3qs6BhuI"})
     // 处理issue
-	err := issue.Process(config, event)
-	return fmt.Sprintf("goversionecho %s", err), nil
+    err := issue.Process(config, event)
+    return fmt.Sprintf("goversionecho %s", err), nil
 }
 ```
