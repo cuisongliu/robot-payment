@@ -5,11 +5,16 @@ Resources:
     Type: 'Aliyun::Serverless::Service'
     Properties:
       Description: 'custom runtime demo'
-    hello:
+    robot:
       Type: 'Aliyun::Serverless::Function'
       Properties:
         Handler: index.handler
-        Initializer: index.initializer
         CodeUri: ./code.zip
         Description: 'demo with custom runtime'
         Runtime: custom
+      Events:
+        http_t:
+          Type: HTTP
+          Properties:
+            AuthType: ANONYMOUS
+            Methods: ['GET', 'POST', 'PUT', 'DELETE', 'HEAD']

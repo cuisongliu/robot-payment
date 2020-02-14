@@ -51,7 +51,7 @@ func Process(config Config, event IssueCommentEvent) error {
 		Password: config.Password,
 	}
 	client := github.NewClient(tp.Client())
-	//TODO decode commands
+	//decode commands
 	commands := decodeFromBody(event.Comment.Body)
 
 	for _, command := range commands {

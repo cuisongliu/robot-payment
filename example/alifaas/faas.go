@@ -1,25 +1,30 @@
 package main
-
 import (
-	"encoding/json"
-
-	gr "github.com/awesome-fc/golang-runtime"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"os"
 )
-
-func initialize(ctx *gr.FCContext) error {
-	fcLogger := gr.GetLogger().WithField("requestId", ctx.RequestID)
-	fcLogger.Infoln("init golang!")
-	return nil
-}
-func handler(ctx *gr.FCContext, event []byte) ([]byte, error) {
-	fcLogger := gr.GetLogger().WithField("requestId", ctx.RequestID)
-	_, err := json.Marshal(ctx)
+func handler(w http.ResponseWriter, req *http.Request) {
+	requestID := req.Header.Get("x-fc-request-id")
+	fmt.Println(fmt.Sprintf("sealyun robot Invoke Start RequestId: %s", requestID))
+	defer func() {
+		fmt.Println(fmt.Sprintf("FC Invoke End RequestId: %s", requestID))
+	}()
+	// your logic
+	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {
-		fcLogger.Error("error:", err)
+		panic(err)
 	}
-	fcLogger.Infof("hello golang! %s",string(event))
-	return event, nil
+	info := fmt.Sprintf("method =  %+v;\nheaders = %+v;\nbody = %+v", req.Method, req.Header, string(b))
+	w.Write([]byte(fmt.Sprintf("Hello, golang  http invoke! detail:\n %s", info)))
 }
 func main() {
-	gr.Start(handler, initialize)
+	fmt.Println("FunctionCompute go runtime inited.")
+	http.HandleFunc("/", handler)
+	port := os.Getenv("FC_SERVER_PORT")
+	if port == "" {
+		port = "9000"
+	}
+	http.ListenAndServe(":" + port, nil)
 }
