@@ -60,8 +60,13 @@ func (d *DronePromote) Process(event issue.IssueEvent) error {
 		return fmt.Errorf("get repo name failed:%s",*event.IssueCommentEvent.Repo.FullName)
 	}
 	namespace := lnamespace[0]
+	fmt.Println("promte info : ",namespace,name,cmd.Build,cmd.Target,cmd.Params)
 	// drone promote
-	client.Promote(namespace,name,cmd.Build,cmd.Target,cmd.Params)
+	_,err := client.Promote(namespace,name,cmd.Build,cmd.Target,cmd.Params)
+	if err != nil {
+		fmt.Errorf("promote failed : %s\n",err)
+		return err
+	}
 	return nil
 }
 

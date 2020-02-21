@@ -5,6 +5,11 @@ Resources:
     Type: 'Aliyun::Serverless::Service'
     Properties:
       Description: 'custom runtime demo'
+      LogConfig:
+        Project: 'sealyun'
+        Logstore: 'robot'
+      Policies:
+        - AliyunLogFullAccess
     robot:
       Type: 'Aliyun::Serverless::Function'
       Properties:

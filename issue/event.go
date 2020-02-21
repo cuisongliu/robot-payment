@@ -53,6 +53,7 @@ func Process(config Config, event IssueCommentEvent) error {
 	client := github.NewClient(tp.Client())
 	//decode commands
 	commands := decodeFromBody(event.Comment.Body)
+	fmt.Println("commands from body:",commands)
 
 	for _, command := range commands {
 		issueEvent := IssueEvent{
@@ -60,6 +61,7 @@ func Process(config Config, event IssueCommentEvent) error {
 			command,
 			client,
 		}
+		fmt.Println("process command",command.Type,command.Command)
 		if v, ok := robot[command.Type]; ok {
 			v.Process(issueEvent)
 		}
@@ -106,9 +108,10 @@ func validCommand(s string) bool {
 
 // decode /pay 10 like command
 func decodeCommand(s string) *Command {
-	var command *Command
+	command := &Command{}
 	var i, j int
-	for i := range s {
+	fmt.Printf("decode cmd: %s\n",s)
+	for i = range s {
 		if byte(s[i]) == '/' {
 			break
 		}
@@ -124,6 +127,5 @@ func decodeCommand(s string) *Command {
 			break
 		}
 	}
-	fmt.Printf("decode command: %s, [%s][%s]", s, command.Type, command.Command)
 	return command
 }

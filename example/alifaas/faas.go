@@ -1,24 +1,50 @@
 package main
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/fanux/robot/issue"
+	"github.com/fanux/robot/processor/drone_promote"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 )
 func handler(w http.ResponseWriter, req *http.Request) {
-	requestID := req.Header.Get("x-fc-request-id")
-	fmt.Println(fmt.Sprintf("sealyun robot Invoke Start RequestId: %s", requestID))
-	defer func() {
-		fmt.Println(fmt.Sprintf("FC Invoke End RequestId: %s", requestID))
-	}()
-	// your logic
-	b, err := ioutil.ReadAll(req.Body)
-	if err != nil {
-		panic(err)
+	b,err := ioutil.ReadAll(req.Body)
+	event := &issue.IssueCommentEvent{}
+	value,err := url.ParseQuery(string(b))
+	eventstr := []byte(value.Get("payload"))
+	if len(eventstr) == 0 {
+		return
 	}
-	info := fmt.Sprintf("method =  %+v;\nheaders = %+v;\nbody = %+v", req.Method, req.Header, string(b))
-	w.Write([]byte(fmt.Sprintf("Hello, golang  http invoke! detail:\n %s", info)))
+	err = json.Unmarshal(eventstr,event)
+	if err != nil {
+		fmt.Printf("decode event error : %s",err)
+		return
+	}
+	fmt.Printf("repo name is : %s body: %s/n",*event.Repo.FullName, *event.Comment.Body)
+	config := issue.NewConfig("", "")
+	issue.Regist("/promote", &drone_promote.DronePromote{"", ""})
+	err = issue.Process(config, *event)
+	if err != nil {
+		fmt.Printf("promote error %s",err)
+	}
 }
+
+func promoteEvent(body []byte) *issue.IssueCommentEvent{
+	event := &issue.IssueCommentEvent{}
+	json.Unmarshal(body,event)
+	fmt.Println(event)
+	config := issue.NewConfig("", "")
+	issue.Regist("/promote", &drone_promote.DronePromote{"", ""})
+	err := issue.Process(config, *event)
+	if err != nil {
+		fmt.Printf("promote error %s",err)
+		return nil
+	}
+	return event
+}
+
 func main() {
 	fmt.Println("FunctionCompute go runtime inited.")
 	http.HandleFunc("/", handler)
