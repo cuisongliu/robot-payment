@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/fanux/robot/processor/drone_promote"
+	"time"
 
 	"github.com/fanux/robot/issue"
 	"github.com/tencentyun/scf-go-lib/cloudfunction"
@@ -20,6 +21,9 @@ func hello(ctx context.Context, event issue.IssueCommentEvent) (string, error) {
 }
 
 func main() {
+	t1 := time.Now()
+	d := t1.Sub(t1)
+	d-time.Hour
 	// Make the handler available for Remote Procedure Call by Cloud Function
 	cloudfunction.Start(hello)
 }
