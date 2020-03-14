@@ -22,7 +22,5 @@ spec:
               value: sealrobot
             - name: GITHUB_PASSWD
               value: f975494768
-          command:
-            - ./robot
           imagePullPolicy: Always
       hostNetwork: true
