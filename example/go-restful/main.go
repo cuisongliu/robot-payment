@@ -21,8 +21,9 @@ func main() {
 	issue.Regist("/pay", &pay.Pay{})
 	ws := new(restful.WebService)
 	ws.Route(ws.GET("/pay").To(payHandle))
+	ws.Route(ws.POST("/pay").To(payHandle))
 	restful.Add(ws)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8527", nil))
 }
 
 func payHandle(req *restful.Request, resp *restful.Response) {
@@ -44,5 +45,5 @@ func payHandle(req *restful.Request, resp *restful.Response) {
 	if err != nil {
 		fmt.Printf("promote error %s",err)
 	}
-	io.WriteString(resp, "world")
+	//io.WriteString(resp, "world")
 }
