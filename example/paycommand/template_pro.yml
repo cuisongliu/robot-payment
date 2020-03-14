@@ -12,7 +12,7 @@ Resources:
         - AliyunLogFullAccess
       EnvironmentVariables:
         GITHUB_USER: sealrobot
-        GITHUB_PASSWD: xxx
+        GITHUB_PASSWD: xxxbbb
     robot:
       Type: 'Aliyun::Serverless::Function'
       Properties:
