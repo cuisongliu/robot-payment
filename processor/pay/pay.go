@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/fanux/robot/issue"
 	"github.com/google/go-github/github"
+	"time"
 )
 
 type Pay struct {
@@ -23,12 +24,13 @@ func (p *Pay)Process(event issue.IssueEvent) error {
 	fmt.Printf("comment issue %s %s %d %s",*event.IssueCommentEvent.Repo.Name,
 		*event.IssueCommentEvent.Repo.Owner.Login,*event.IssueCommentEvent.Issue.Number,comment)
 
-	_,_,err := event.Client.Issues.CreateComment(context.Background(),*event.IssueCommentEvent.Repo.Owner.Login,*event.IssueCommentEvent.Repo.Name,*event.IssueCommentEvent.Issue.Number,comment)
+	ctx := context.Background()
+	_,_,err := event.Client.Issues.CreateComment(ctx,*event.IssueCommentEvent.Repo.Owner.Login,*event.IssueCommentEvent.Repo.Name,*event.IssueCommentEvent.Issue.Number,comment)
 
 	if err != nil {
 		fmt.Printf("comment issue failed #{err}")
 	}
-	// 如果不是长时间运行的需要加上sleep，否则主进程先退出可能会失败
-	// time.Sleep(time.Second * 40)
+
+	time.Sleep(time.Second * 5)
 	return err
 }

@@ -69,7 +69,10 @@ func Process(config Config, event IssueCommentEvent) error {
 		}
 		fmt.Println("process command",command.Type,command.Command)
 		if v, ok := robot[command.Type]; ok {
-			v.Process(issueEvent)
+			err := v.Process(issueEvent)
+			if err != nil  {
+				return err
+			}
 		}
 	}
 

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/fanux/robot/issue"
-	"github.com/fanux/robot/processor/drone_promote"
 	"github.com/fanux/robot/processor/pay"
 	"io/ioutil"
 	"net/http"
@@ -26,7 +25,6 @@ func handler(w http.ResponseWriter, req *http.Request) {
 	}
 	fmt.Printf("repo name is : %s body: %s/n",*event.Repo.FullName, *event.Comment.Body)
 	config := issue.NewConfig("", "")
-	issue.Regist("/promote", &drone_promote.DronePromote{"", ""})
 	err = issue.Process(config, *event)
 	if err != nil {
 		fmt.Printf("promote error %s",err)
@@ -47,6 +45,7 @@ func payEvent(body []byte) *issue.IssueCommentEvent {
 }
 
 func main() {
+	issue.Regist("/pay", &pay.Pay{})
 	fmt.Println("FunctionCompute go runtime inited.")
 	http.HandleFunc("/", handler)
 	port := os.Getenv("FC_SERVER_PORT")

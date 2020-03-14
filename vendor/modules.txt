@@ -1,19 +1,20 @@
-# github.com/awesome-fc/golang-runtime v0.0.0-20190923032604-518f4689427d
-github.com/awesome-fc/golang-runtime
 # github.com/drone/drone-go v1.1.0
 github.com/drone/drone-go/drone
+# github.com/emicklei/go-restful v2.12.0+incompatible
+github.com/emicklei/go-restful
+github.com/emicklei/go-restful/log
 # github.com/golang/protobuf v1.3.2
 github.com/golang/protobuf/proto
 # github.com/google/go-github v17.0.0+incompatible
 github.com/google/go-github/github
 # github.com/google/go-querystring v1.0.0
 github.com/google/go-querystring/query
-# github.com/konsorten/go-windows-terminal-sequences v1.0.1
-github.com/konsorten/go-windows-terminal-sequences
-# github.com/sirupsen/logrus v1.4.2
-github.com/sirupsen/logrus
-# github.com/t-tomalak/logrus-easy-formatter v0.0.0-20190827215021-c074f06c5816
-github.com/t-tomalak/logrus-easy-formatter
+# github.com/json-iterator/go v1.1.9
+github.com/json-iterator/go
+# github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421
+github.com/modern-go/concurrent
+# github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742
+github.com/modern-go/reflect2
 # github.com/tencentyun/scf-go-lib v0.0.0-20200116145541-9a6ea1bf75b8
 github.com/tencentyun/scf-go-lib/cloudfunction
 github.com/tencentyun/scf-go-lib/cloudfunction/messages
@@ -24,8 +25,6 @@ golang.org/x/net/context/ctxhttp
 # golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 golang.org/x/oauth2
 golang.org/x/oauth2/internal
-# golang.org/x/sys v0.0.0-20200113162924-86b910548bc1
-golang.org/x/sys/unix
 # google.golang.org/appengine v1.6.5
 google.golang.org/appengine/internal
 google.golang.org/appengine/internal/base

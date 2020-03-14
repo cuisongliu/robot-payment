@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: robot
+  labels:
+    app: robot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: robot
+  template:
+    metadata:
+      labels:
+        app: robot
+    spec:
+      containers:
+        - name: robot
+          image: fanux/robot:latest
+          env:
+            - name: GITHUB_USER
+              value: sealrobot
+            - name: GITHUB_PASSWD
+              value: f975494768
+          command:
+            - ./robot
+          imagePullPolicy: Always
+      hostNetwork: true
