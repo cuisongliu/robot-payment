@@ -6,7 +6,6 @@ import (
 	"github.com/emicklei/go-restful"
 	"github.com/fanux/robot/issue"
 	"github.com/fanux/robot/processor/pay"
-	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
