@@ -52,7 +52,7 @@ func Process(config Config, event IssueCommentEvent) error {
 	}
 	client := github.NewClient(tp.Client())
 	var body *string
-	if *event.Issue.Comments == 0 {
+	if event.Comment.Body == nil {
 		body = event.Issue.Body
 	} else {
 		body = event.Comment.Body

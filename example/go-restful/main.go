@@ -38,7 +38,7 @@ func payHandle(req *restful.Request, resp *restful.Response) {
 		fmt.Printf("decode event error : %s",err)
 		return
 	}
-	fmt.Printf("repo name is : %s body: %s/n",*event.Repo.FullName, *event.Comment.Body)
+	fmt.Printf("repo name is : %s body: %s/n",*event.Repo.FullName)
 	config := issue.NewConfig("", "")
 	err = issue.Process(config, *event)
 	if err != nil {
