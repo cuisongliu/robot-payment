@@ -10,6 +10,8 @@ Resources:
         Logstore: 'robot'
       Policies:
         - AliyunLogFullAccess
+      EnvironmentVariables:
+        GITHUB_USER: sealrobot
     robot:
       Type: 'Aliyun::Serverless::Function'
       Properties:
