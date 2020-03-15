@@ -21,8 +21,8 @@ spec:
           image: registry.cn-hangzhou.aliyuncs.com/sealyun/robot:latest
           env:
             - name: GITHUB_USER
-              value: sealrobot
+              value: seobot
             - name: GITHUB_PASSWD
-              value: f975494768
+              value: xxxxx
           imagePullPolicy: Always
       hostNetwork: true
