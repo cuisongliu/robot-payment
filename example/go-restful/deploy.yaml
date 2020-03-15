@@ -14,9 +14,11 @@ spec:
       labels:
         app: robot
     spec:
+      imagePullSecrets:
+        - name: alibaba
       containers:
         - name: robot
-          image: fanux/robot:latest
+          image: registry.cn-hangzhou.aliyuncs.com/sealyun/robot:latest
           env:
             - name: GITHUB_USER
               value: sealrobot
