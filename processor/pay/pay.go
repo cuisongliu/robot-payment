@@ -2,7 +2,6 @@ package pay
 
 import (
 	"fmt"
-	"github.com/fanux/robot/client_utils"
 	"github.com/fanux/robot/issue"
 	"github.com/fanux/robot/utils"
 )
@@ -38,7 +37,7 @@ func (p *Pay) Process(event issue.IssueEvent) error {
 		fmt.Printf("comment issue failed %s", err)
 	}
 	*/
-	err := event.Comment(body)
+	err := event.CommentBody(body)
 	if err != nil {
 		return err
 	}
@@ -58,5 +57,5 @@ func (p *PayTo)Process(event issue.IssueEvent) error {
 		return fmt.Errorf("pay to command error %s", event.Command.Command)
 	}
 	body := fmt.Sprintf("已经转账[%s]元到支付宝账户[%s],注意查收",s[1],s[0])
-	return event.Comment(body)
+	return event.CommentBody(body)
 }

@@ -7,7 +7,8 @@ import (
 "github.com/google/go-github/github"
 )
 
-func (event IssueEvent)Comment(body string) error{
+// 回复issue
+func (event IssueEvent)CommentBody(body string) error{
 	comment := &github.IssueComment{
 		Body: &body,
 	}
@@ -25,6 +26,7 @@ func (event IssueEvent)Comment(body string) error{
 	return nil
 }
 
+// 给issue贴标签
 func (event IssueEvent)Label(label []string) error {
 	owner := *event.IssueCommentEvent.Repo.Owner.Login
 	repo := *event.IssueCommentEvent.Repo.Name
