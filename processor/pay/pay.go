@@ -1,10 +1,10 @@
 package pay
 
 import (
-	"context"
 	"fmt"
+	"github.com/fanux/robot/client_utils"
 	"github.com/fanux/robot/issue"
-	"github.com/google/go-github/github"
+	"github.com/fanux/robot/utils"
 )
 
 type Pay struct {
@@ -22,6 +22,7 @@ func (p *Pay) Process(event issue.IssueEvent) error {
 		"请在issue中回复:\n"+
 		"/alipay [你的支付宝号] （如 /alipay 15281817171）\n"+
 		"以让我知道您的支付宝", *event.Comment.User.Login, cmd)
+	/*
 	comment := &github.IssueComment{
 		Body: &body,
 	}
@@ -36,13 +37,26 @@ func (p *Pay) Process(event issue.IssueEvent) error {
 	if err != nil {
 		fmt.Printf("comment issue failed %s", err)
 	}
-
-	ctx = context.Background()
-	fmt.Printf("Add label to issue")
-	_, _, err = event.Client.Issues.AddLabelsToIssue(ctx, owner, repo, num, []string{"paid"})
+	*/
+	err := event.Comment(body)
 	if err != nil {
-		fmt.Printf("issue label failed %s", err)
+		return err
 	}
+	err = event.Label([]string{"paid"})
 
 	return err
+}
+
+type PayTo struct {
+	Account string
+	Money int
+}
+
+func (p *PayTo)Process(event issue.IssueEvent) error {
+	s := utils.SplitMultiBlank(event.Command.Command)
+	if len(s) != 2 {
+		return fmt.Errorf("pay to command error %s", event.Command.Command)
+	}
+	body := fmt.Sprintf("已经转账[%s]元到支付宝账户[%s],注意查收",s[1],s[0])
+	return event.Comment(body)
 }

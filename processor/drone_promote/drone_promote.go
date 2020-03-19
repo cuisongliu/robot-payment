@@ -3,6 +3,7 @@ package drone_promote
 import (
 	"context"
 	"fmt"
+	"github.com/fanux/robot/utils"
 	"os"
 	"strconv"
 	"strings"
@@ -78,7 +79,7 @@ func (d *DronePromote) Process(event issue.IssueEvent) error {
 func decodeCmd(s string) *DronePromoteCmd{
 	var err error
 	cmd := &DronePromoteCmd{}
-	split := splitMultiBlank(s)
+	split := utils.SplitMultiBlank(s)
 	if len(split) < 2 {
 		return nil
 	}
@@ -98,7 +99,7 @@ func decodeCmd(s string) *DronePromoteCmd{
 	}
 	return cmd
 }
-
+/*
 func splitMultiBlank(s string) []string {
 	var res []string
 	i,j := 0,0
@@ -121,6 +122,7 @@ func splitMultiBlank(s string) []string {
 	}
 	return res
 }
+ */
 
 func (d *DronePromote) client() *drone.Client {
 	config := new(oauth2.Config)

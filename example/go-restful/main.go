@@ -18,6 +18,7 @@ import (
 
 func main() {
 	issue.Regist("/pay", &pay.Pay{})
+	issue.Regist("/payto", &pay.PayTo{})
 	ws := new(restful.WebService)
 	ws.Route(ws.GET("/pay").To(payHandle))
 	ws.Route(ws.POST("/pay").To(payHandle))
