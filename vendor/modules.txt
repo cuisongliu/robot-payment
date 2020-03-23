@@ -15,10 +15,16 @@ github.com/json-iterator/go
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742
 github.com/modern-go/reflect2
+# github.com/smartwalle/alipay/v3 v3.1.0
+github.com/smartwalle/alipay/v3
+# github.com/smartwalle/crypto4go v1.0.2
+github.com/smartwalle/crypto4go
 # github.com/tencentyun/scf-go-lib v0.0.0-20200116145541-9a6ea1bf75b8
 github.com/tencentyun/scf-go-lib/cloudfunction
 github.com/tencentyun/scf-go-lib/cloudfunction/messages
 github.com/tencentyun/scf-go-lib/functioncontext
+# golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
+golang.org/x/crypto/pbkdf2
 # golang.org/x/net v0.0.0-20200114155413-6afb5195e5aa
 golang.org/x/net/context
 golang.org/x/net/context/ctxhttp

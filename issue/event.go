@@ -59,7 +59,7 @@ func Process(config Config, event IssueCommentEvent) error {
 	}
 	//decode commands
 	commands := decodeFromBody(body)
-	fmt.Println("commands from body:",commands)
+	fmt.Println("commands from body:", commands)
 
 	for _, command := range commands {
 		issueEvent := IssueEvent{
@@ -67,10 +67,10 @@ func Process(config Config, event IssueCommentEvent) error {
 			command,
 			client,
 		}
-		fmt.Println("process command",command.Type,command.Command)
+		fmt.Println("process command", command.Type, command.Command)
 		if v, ok := robot[command.Type]; ok {
 			err := v.Process(issueEvent)
-			if err != nil  {
+			if err != nil {
 				return err
 			}
 		}
@@ -119,7 +119,7 @@ func validCommand(s string) bool {
 func decodeCommand(s string) *Command {
 	command := &Command{}
 	var i, j int
-	fmt.Printf("decode cmd: %s\n",s)
+	fmt.Printf("decode cmd: %s\n", s)
 	for i = range s {
 		if byte(s[i]) == '/' {
 			break

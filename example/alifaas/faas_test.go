@@ -225,8 +225,7 @@ func Test_promoteEvent(t *testing.T) {
 		fmt.Println(os.Getenv("GITHUB_USER"))
 		e := promoteEvent(tt.args.body)
 		if *e.Repo.FullName != "fanux/sshcmd" {
-			t.Errorf("%s",*e.Repo.FullName)
+			t.Errorf("%s", *e.Repo.FullName)
 		}
 	}
 }
-

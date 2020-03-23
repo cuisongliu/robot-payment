@@ -29,7 +29,7 @@ type DronePromote struct {
 }
 
 type DronePromoteCmd struct {
-	Build int
+	Build  int
 	Target string
 	Params map[string]string
 }
@@ -56,16 +56,16 @@ func (d *DronePromote) Process(event issue.IssueEvent) error {
 	// decode command
 	cmd := decodeCmd(event.Command.Command)
 	name := *event.IssueCommentEvent.Repo.Name
-	lnamespace := strings.Split(*event.IssueCommentEvent.Repo.FullName,"/")
+	lnamespace := strings.Split(*event.IssueCommentEvent.Repo.FullName, "/")
 	if len(lnamespace) != 2 {
-		return fmt.Errorf("get repo name failed:%s",*event.IssueCommentEvent.Repo.FullName)
+		return fmt.Errorf("get repo name failed:%s", *event.IssueCommentEvent.Repo.FullName)
 	}
 	namespace := lnamespace[0]
-	fmt.Println("promte info : ",namespace,name,cmd.Build,cmd.Target,cmd.Params)
+	fmt.Println("promte info : ", namespace, name, cmd.Build, cmd.Target, cmd.Params)
 	// drone promote
-	_,err := client.Promote(namespace,name,cmd.Build,cmd.Target,cmd.Params)
+	_, err := client.Promote(namespace, name, cmd.Build, cmd.Target, cmd.Params)
 	if err != nil {
-		fmt.Errorf("promote failed : %s\n",err)
+		fmt.Errorf("promote failed : %s\n", err)
 		return err
 	}
 	return nil
@@ -76,20 +76,20 @@ func (d *DronePromote) Process(event issue.IssueEvent) error {
 // Target:test
 // Para:key:value
 // Para is optional
-func decodeCmd(s string) *DronePromoteCmd{
+func decodeCmd(s string) *DronePromoteCmd {
 	var err error
 	cmd := &DronePromoteCmd{}
 	split := utils.SplitMultiBlank(s)
 	if len(split) < 2 {
 		return nil
 	}
-	cmd.Build,err = strconv.Atoi(split[0])
+	cmd.Build, err = strconv.Atoi(split[0])
 	if err != nil {
 		return nil
 	}
 	cmd.Target = split[1]
-	for _,p := range split[2:] {
-		t := strings.Split(p,"=")
+	for _, p := range split[2:] {
+		t := strings.Split(p, "=")
 		if len(t) == 2 {
 			if cmd.Params == nil {
 				cmd.Params = make(map[string]string)
@@ -99,6 +99,7 @@ func decodeCmd(s string) *DronePromoteCmd{
 	}
 	return cmd
 }
+
 /*
 func splitMultiBlank(s string) []string {
 	var res []string
@@ -122,7 +123,7 @@ func splitMultiBlank(s string) []string {
 	}
 	return res
 }
- */
+*/
 
 func (d *DronePromote) client() *drone.Client {
 	config := new(oauth2.Config)

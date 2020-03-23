@@ -1,14 +1,14 @@
 package issue
 
 import (
-"context"
-"fmt"
+	"context"
+	"fmt"
 
-"github.com/google/go-github/github"
+	"github.com/google/go-github/github"
 )
 
 // 回复issue
-func (event IssueEvent)CommentBody(body string) error{
+func (event IssueEvent) CommentBody(body string) error {
 	comment := &github.IssueComment{
 		Body: &body,
 	}
@@ -27,7 +27,7 @@ func (event IssueEvent)CommentBody(body string) error{
 }
 
 // 给issue贴标签
-func (event IssueEvent)Label(label []string) error {
+func (event IssueEvent) Label(label []string) error {
 	owner := *event.IssueCommentEvent.Repo.Owner.Login
 	repo := *event.IssueCommentEvent.Repo.Name
 	num := *event.IssueCommentEvent.Issue.Number

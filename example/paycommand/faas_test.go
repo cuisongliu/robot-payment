@@ -407,7 +407,7 @@ func Test_payEvent(t *testing.T) {
 		// 注意主进程先退出可能会评论失败，在函数里sleep一下解决，长时间运行的程序无此问题
 		e := payEvent(tt.args.body)
 		if *e.Repo.FullName != "fanux/sshcmd" {
-			t.Errorf("%s",*e.Repo.FullName)
+			t.Errorf("%s", *e.Repo.FullName)
 		}
 	}
 }

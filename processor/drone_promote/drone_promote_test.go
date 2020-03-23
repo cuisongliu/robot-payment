@@ -17,17 +17,17 @@ func Test_decodeCmd(t *testing.T) {
 		{
 			"test promote cmd",
 			args{"32 test key=value"},
-			&DronePromoteCmd{32,"test",map[string]string{"key":"value"}},
+			&DronePromoteCmd{32, "test", map[string]string{"key": "value"}},
 		},
 		{
 			"test promote cmd blanks",
 			args{"  32 test   key=value"},
-			&DronePromoteCmd{32,"test",map[string]string{"key":"value"}},
+			&DronePromoteCmd{32, "test", map[string]string{"key": "value"}},
 		},
 		{
 			"test promote cmd blanks",
 			args{"  32 test   key=value   "},
-			&DronePromoteCmd{32,"test",map[string]string{"key":"value"}},
+			&DronePromoteCmd{32, "test", map[string]string{"key": "value"}},
 		},
 	}
 	for _, tt := range tests {
@@ -51,12 +51,12 @@ func Test_splitMultiBlank(t *testing.T) {
 		{
 			"test split",
 			args{"  43 test   key=value"},
-			[]string{"43","test","key=value"},
+			[]string{"43", "test", "key=value"},
 		},
 		{
 			"test split 2",
 			args{"  43 test   key=value  "},
-			[]string{"43","test","key=value"},
+			[]string{"43", "test", "key=value"},
 		},
 	}
 	for _, tt := range tests {

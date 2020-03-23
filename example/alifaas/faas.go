@@ -1,4 +1,5 @@
 package main
+
 import (
 	"encoding/json"
 	"fmt"
@@ -9,37 +10,38 @@ import (
 	"net/url"
 	"os"
 )
+
 func handler(w http.ResponseWriter, req *http.Request) {
-	b,err := ioutil.ReadAll(req.Body)
+	b, err := ioutil.ReadAll(req.Body)
 	event := &issue.IssueCommentEvent{}
-	value,err := url.ParseQuery(string(b))
+	value, err := url.ParseQuery(string(b))
 	eventstr := []byte(value.Get("payload"))
 	if len(eventstr) == 0 {
 		return
 	}
-	err = json.Unmarshal(eventstr,event)
+	err = json.Unmarshal(eventstr, event)
 	if err != nil {
-		fmt.Printf("decode event error : %s",err)
+		fmt.Printf("decode event error : %s", err)
 		return
 	}
-	fmt.Printf("repo name is : %s body: %s/n",*event.Repo.FullName, *event.Comment.Body)
+	fmt.Printf("repo name is : %s body: %s/n", *event.Repo.FullName, *event.Comment.Body)
 	config := issue.NewConfig("", "")
 	issue.Regist("/promote", &drone_promote.DronePromote{"", ""})
 	err = issue.Process(config, *event)
 	if err != nil {
-		fmt.Printf("promote error %s",err)
+		fmt.Printf("promote error %s", err)
 	}
 }
 
-func promoteEvent(body []byte) *issue.IssueCommentEvent{
+func promoteEvent(body []byte) *issue.IssueCommentEvent {
 	event := &issue.IssueCommentEvent{}
-	json.Unmarshal(body,event)
+	json.Unmarshal(body, event)
 	fmt.Println(event)
 	config := issue.NewConfig("", "")
 	issue.Regist("/promote", &drone_promote.DronePromote{"", ""})
 	err := issue.Process(config, *event)
 	if err != nil {
-		fmt.Printf("promote error %s",err)
+		fmt.Printf("promote error %s", err)
 		return nil
 	}
 	return event
@@ -52,5 +54,5 @@ func main() {
 	if port == "" {
 		port = "9000"
 	}
-	http.ListenAndServe(":" + port, nil)
+	http.ListenAndServe(":"+port, nil)
 }
