@@ -89,7 +89,7 @@ func Regist(command string, r Robot) {
 
 func decodeFromBody(body *string) []*Command {
 	var res []*Command
-	lines := strings.Split(*body, "\n")
+	lines := strings.Split(*body, "\r\n")
 	for _, line := range lines {
 		if !validCommand(line) {
 			continue

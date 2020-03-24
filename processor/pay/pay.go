@@ -52,7 +52,7 @@ type PayTo struct {
 	PayClient *utils.Alipay
 }
 
-var UserAliaccountMap = map[string]string{"fanux":"15805691422"}
+var UserAliaccountMap = map[string]string{"fanux":"15805691422","PatHoo":"13926139093","cuisongliu":"912387319@qq.com","zhangguanzhang":"zhangguanzhang@qq.com"}
 
 func GetAlipayAccount(user string) string {
 	if v,ok := UserAliaccountMap[user];ok {
@@ -82,6 +82,6 @@ func (p *PayTo) Process(event issue.IssueEvent) error {
 		body = fmt.Sprintf("支付失败，联系管理员处理 %s", err)
 		return event.CommentBody(body)
 	}
-	body = fmt.Sprintf("已经转账[%s]元到支付宝账户[%s],注意查收", s[1], account)
+	body = fmt.Sprintf("已经转账[%s]元到[%s]的支付宝账户,注意查收", s[1], s[0])
 	return event.CommentBody(body)
 }

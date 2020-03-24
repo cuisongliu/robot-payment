@@ -63,7 +63,7 @@ func (a *Alipay) PayTo(account string, amount string, remark string) error {
 		return fmt.Errorf("pay for %s failed %s, resp : %v",account,err,rsp)
 	}
 	if !rsp.IsSuccess(){
-		return fmt.Errorf("pay for %s not success %s, %v",account,err,rsp)
+		return fmt.Errorf("pay for %s not success, amount[%s] resp : %v", account,amount,rsp)
 	}
 	return nil
 }
