@@ -49,7 +49,7 @@ func New() *Alipay {
 func (a *Alipay) PayTo(account string, amount string, remark string) error {
 	p := alipay.FundTransToAccountTransfer{
 		AppAuthToken:  "",
-		OutBizNo:  fmt.Sprintf("%d-%s-%s",time.Now().Unix(),account,amount),
+		OutBizNo:  fmt.Sprintf("%d",time.Now().UnixNano()),
 		PayeeType:     "ALIPAY_LOGONID",
 		PayeeAccount:  account,
 		Amount:       amount,
@@ -63,7 +63,8 @@ func (a *Alipay) PayTo(account string, amount string, remark string) error {
 		return fmt.Errorf("pay for %s failed %s, resp : %v",account,err,rsp)
 	}
 	if !rsp.IsSuccess(){
-		return fmt.Errorf("pay for %s not success, amount[%s] resp : %v", account,amount,rsp)
+		fmt.Printf("pay failed %v",rsp)
+		return fmt.Errorf("pay for %s not success, amount[%s] resp : %v", account,amount,rsp.Content.Msg)
 	}
 	return nil
 }

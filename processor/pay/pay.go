@@ -20,7 +20,9 @@ func (p *Pay) Process(event issue.IssueEvent) error {
 	body := fmt.Sprintf("完成这个issue中的任务，代码成功合并，%s 老板就会支付你 %s 元, \n"+
 		"请在issue中回复:\n"+
 		"/alipay [你的支付宝号] （如 /alipay 15281817171）\n"+
-		"以让我知道您的支付宝", *event.Comment.User.Login, cmd)
+		"以让我知道您的支付宝\n\n" +
+		"/apply\n" +
+		"如上apply指令表示申请任务，第一个申请人将被分配任务，如果任务已经被分配请不要重复申请", *event.Comment.User.Login, cmd)
 	/*
 		comment := &github.IssueComment{
 			Body: &body,
@@ -52,7 +54,9 @@ type PayTo struct {
 	PayClient *utils.Alipay
 }
 
-var UserAliaccountMap = map[string]string{"fanux":"15805691422","PatHoo":"13926139093","cuisongliu":"912387319@qq.com","zhangguanzhang":"zhangguanzhang@qq.com"}
+var UserAliaccountMap = map[string]string{"fanux":"15805691422","PatHoo":"13926139093",
+	"cuisongliu":"912387319@qq.com","zhangguanzhang":"zhangguanzhang@qq.com",
+	"uglyliu":"footprints19940807@163.com",}
 
 func GetAlipayAccount(user string) string {
 	if v,ok := UserAliaccountMap[user];ok {
