@@ -15,7 +15,7 @@ func (p *Apply) Process(event issue.IssueEvent) error {
 		return err
 	}
 	if len(as) != 0 {
-		event.CommentBody(fmt.Sprintf("任务已经分配给了%s, 重复申请没用",as[0]))
+		event.CommentBody(fmt.Sprintf("@%s 任务已经分配给了%s, 重复申请没用",*event.Comment.User.Login,as[0]))
 		return nil
 	}
 
@@ -24,7 +24,6 @@ func (p *Apply) Process(event issue.IssueEvent) error {
 		event.CommentBody(fmt.Sprintf("任务分配失败，%s",err))
 		return err
 	}
-
-	return nil
+	return event.CommentBody(fmt.Sprintf("@%s 你成功申请了任务，任务完成后使用/alipay xxx 提供支付宝号",*event.Comment.User.Login))
 }
 

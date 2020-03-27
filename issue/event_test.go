@@ -24,6 +24,26 @@ func Test_decodeCommand(t *testing.T) {
 			args{"   /promote 2 test"},
 			&Command{"/promote", "2 test"},
 		},
+		{
+			"apply command",
+			args{"/apply"},
+			&Command{"/apply", ""},
+		},
+		{
+			"apply command",
+			args{"  /apply"},
+			&Command{"/apply", ""},
+		},
+		{
+			"apply command",
+			args{"/apply   "},
+			&Command{"/apply", ""},
+		},
+		{
+			"apply command",
+			args{"   /apply   "},
+			&Command{"/apply", ""},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

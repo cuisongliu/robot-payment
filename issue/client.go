@@ -44,12 +44,7 @@ func (event IssueEvent) Label(label []string) error {
 
 // 获取issue分配人
 func (event IssueEvent) GetAssign() ([]string, error) {
-	owner := *event.IssueCommentEvent.Repo.Owner.Login
-	repo := *event.IssueCommentEvent.Repo.Name
-	users,_,err := event.Client.Issues.ListAssignees(context.Background(),owner,repo,nil)
-	if err != nil {
-		return []string{},err
-	}
+	users := event.Issue.Assignees
 	var res []string
 	for _,u := range users {
 		res = append(res,*u.Login)

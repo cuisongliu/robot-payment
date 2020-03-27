@@ -127,9 +127,14 @@ func decodeCommand(s string) *Command {
 	}
 	var flag bool
 	for j = i; j < len(s); j++ {
-		if byte(s[j]) == ' ' {
+		if !flag && (byte(s[j]) == ' ' || j==len(s)-1){
 			flag = true
-			command.Type = s[i:j]
+			if s[j] == ' ' {
+				command.Type = s[i:j]
+			} else {
+				command.Type = s[i:j+1]
+				break
+			}
 		}
 		if flag && byte(s[j]) != ' ' {
 			command.Command = s[j:]
