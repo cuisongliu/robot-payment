@@ -6,6 +6,7 @@ import (
 	"github.com/emicklei/go-restful"
 	"github.com/fanux/robot/issue"
 	"github.com/fanux/robot/processor/apply"
+	"github.com/fanux/robot/processor/invite"
 	"github.com/fanux/robot/processor/pay"
 	"github.com/fanux/robot/utils"
 	"io/ioutil"
@@ -20,6 +21,7 @@ import (
 
 func main() {
 	issue.Regist("/pay", &pay.Pay{})
+	issue.Regist("/invite", &invite.Invite{})
 	issue.Regist("/apply", &apply.Apply{})
 	issue.Regist("/payto", &pay.PayTo{PayClient:utils.New()})
 	ws := new(restful.WebService)
