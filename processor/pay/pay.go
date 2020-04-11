@@ -56,7 +56,7 @@ type PayTo struct {
 
 var UserAliaccountMap = map[string]string{"fanux":"15805691422","PatHoo":"13926139093",
 	"cuisongliu":"912387319@qq.com","zhangguanzhang":"zhangguanzhang@qq.com",
-	"uglyliu":"footprints19940807@163.com",}
+	"uglyliu":"footprints19940807@163.com", "jinnzy":"839444083@qq.com", "svolence":"15726646803"}
 
 func GetAlipayAccount(user string) string {
 	if v,ok := UserAliaccountMap[user];ok {
