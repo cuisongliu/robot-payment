@@ -7,6 +7,19 @@ import (
 	"github.com/google/go-github/github"
 )
 
+func (event IssueEvent) CloseIssue() error {
+	state := "closed"
+	owner := *event.IssueCommentEvent.Repo.Owner.Login
+	repo := *event.IssueCommentEvent.Repo.Name
+	num := *event.IssueCommentEvent.Issue.Number
+	ctx := context.Background()
+	req := &github.IssueRequest{
+		State: &state,
+	}
+	_,_,err := event.Client.Issues.Edit(ctx,owner,repo,num,req)
+	return err
+}
+
 // 回复issue
 func (event IssueEvent) CommentBody(body string) error {
 	comment := &github.IssueComment{

@@ -87,5 +87,9 @@ func (p *PayTo) Process(event issue.IssueEvent) error {
 		return event.CommentBody(body)
 	}
 	body = fmt.Sprintf("已经转账[%s]元到[%s]的支付宝账户,注意查收", s[1], s[0])
-	return event.CommentBody(body)
+	err = event.CommentBody(body)
+	if err != nil {
+		return err
+	}
+	return event.CloseIssue()
 }
