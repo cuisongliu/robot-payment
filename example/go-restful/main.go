@@ -24,6 +24,7 @@ func main() {
 	issue.Regist("/invite", &invite.Invite{})
 	issue.Regist("/apply", &apply.Apply{})
 	issue.Regist("/payto", &pay.PayTo{PayClient:utils.New()})
+	issue.Regist("/profit", &pay.Profit{PayClient:utils.New()})
 	ws := new(restful.WebService)
 	ws.Route(ws.GET("/pay").To(payHandle))
 	ws.Route(ws.POST("/pay").To(payHandle))

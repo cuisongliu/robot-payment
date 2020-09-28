@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fanux/robot/issue"
 	"github.com/fanux/robot/utils"
+	"strconv"
 )
 
 type Pay struct {
@@ -56,7 +57,7 @@ type PayTo struct {
 
 var UserAliaccountMap = map[string]string{"fanux":"15805691422","PatHoo":"13926139093",
 	"cuisongliu":"912387319@qq.com","zhangguanzhang":"zhangguanzhang@qq.com",
-	"uglyliu":"footprints19940807@163.com", "jinnzy":"839444083@qq.com", "svolence":"15726646803"}
+	"uglyliu":"footprints19940807@163.com", "jinnzy":"839444083@qq.com", "svolence":"15726646803", "oldthreefeng":"18795605909"}
 
 func GetAlipayAccount(user string) string {
 	if v,ok := UserAliaccountMap[user];ok {
@@ -92,4 +93,41 @@ func (p *PayTo) Process(event issue.IssueEvent) error {
 		return err
 	}
 	return event.CloseIssue()
+}
+
+type Profit struct {
+	PayClient *utils.Alipay
+}
+
+func (p *Profit) Process(event issue.IssueEvent) error {
+	a ,err := strconv.Atoi(event.Command.Command)
+	if err != nil {
+		return err
+	}
+	fmt.Println("amount",a)
+	p.profit(float64(a))
+	return nil
+}
+
+func  (p *Profit) profit(amout float64){
+	foo := map[string]float64{
+		"cuisongliu":0.25,
+		"zhangguanzhang":0.15,
+		"PatHoo":0.15,
+		"fanux":0.01,
+	}
+	//amout = 1466.63
+	for k,v := range foo {
+		account,ok := UserAliaccountMap[k]
+		if !ok {
+			fmt.Println("找不到账户")
+			continue
+		}
+		money := strconv.Itoa(int(amout * v))
+		fmt.Printf("pay to [%s] [%s]", account,money)
+		err := p.PayClient.PayTo(account,money,"六月份分成, 目标2550star未达成，同志们仍需要努力~")
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
 }
