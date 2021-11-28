@@ -1,3 +1,19 @@
+# crypto payment on github
+
+![image](https://user-images.githubusercontent.com/94216827/142736787-f9bdb340-8703-48b5-9b5a-24dd70f42f08.png)
+
+DotPay is a payment platform, you can initiate open source tasks and paid with DOT tokens  (for example, you can initiate paid collaboration tasks when you encounter difficulties in architecture construction, requirements analysis, document construction and testing). Those who complete the tasks as required can receive tokens after the task initiator verifies that the tasks are completed
+
+The specific process is as follows:
+1. Alice recharge Dot tokens on the platform.
+2. Alice initiates paid open source tasks on the Github (such as the task about architecture construction, requirements analysis, document construction, development and testing, etc )
+3. Bob accepted this task on Github and completed it!
+4. Alice clicks on the payment instruction.
+Github receives the instruction and trigger the webhook to contact Bob by email and other notification methods to notify that 10 DOT tokens have been put into our platform
+Exclusive account Wallet.
+5. trigger on chain transfer.
+6. Bob withdraws 10 DOT tokens from our platform to his wallet(such as Polkawallet or MetaMask)
+
 # github payment robot
 Trigger and process some things according to some events on github
 
