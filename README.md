@@ -1,105 +1,109 @@
+翻译类型
+文本翻译
+原文
+# Github robot gēnjù github de yīxiē shìjiàn qù chùfā chǔlǐ yīxiē shì chǔlǐ issue zhōng de yīxiē zhūrú `/pay 100`de zhǐlìng, kěyǐ zì dìngyì zhǐlìng hé zhùcè zhǐlìng de chǔlǐ qì. Shǐyòng chǎngjǐng: > Zìdòng huífù issue bǐrú issue yītiān méi huífù, zìdòng huífù yǐ ràng tí issue de rén mò zhāojí > zìdòng tíxǐng rú kubernetes zhōng/sig zhǐlìng huì bǎ xiāoxī tuī dào duìyìng de xìngqù xiǎozǔ > zìdònghuà cèshì `/test e2e test/test.Sh` > chùfā drone promote shìjiàn `/promote 42 test`zài issue lǐ huífù zhège, jiù huì chùfā CI/CD lǐmiàn xiàmiàn dìngyì de yīgè pipeline ``` # 42 is the build number # drone build promote fanux/sealos 42 test - name: E2etest image: Golang:1.12 Commands: - Echo"this is sealos test" when: Event: - Promote target: - Test ``` ``` github robot drone issue | | | ------>| event | | |-------->| | | | promote | | |-------->| | | | do what ever you want | | | V V V ``` > zìdòng merge dàimǎ `/merge`zhǐlìng kěyǐ zìdòng merge dàimǎ, hái kěyǐ zài merge zhīqián zhīhòu zuò yīxiē shì, bǐrú jìlù xià PR de zuòzhě, fā yóujiàn, děng děng > fùkuǎn [sealos](https://Github.Com/fanux/sealos) de kāifā zhě shì huì yǒu yīdìng chóuláo de,maintainer huì bǎ rènwù fēnjiě xiěchéng issue, ránhòu jiā gè `/pay 100`zhǐlìng jīqì huì shǒuxiān huì zìdòng gěi zhège issue dǎshàng `paid`biāoqiān, ránhòu kāifā zhě kāifā dàimǎ PR, yīdàn bèi merge jiù huì zìdòng bǎ qián zhuǎn rù gāi kāifā zhě de zhīfùbǎo zhànghù. > Qítā dǎ biāoqiān, guānbì chāoshí issue děng, ## shǐyòng shìlì zhèlǐ shǐyòng yīgè faas pǎo yīgè jīqìrén de lìzi bāngzhù dàjiā lǐjiě. Zhège jīqìrén shì jiāntīng issue ránhòu qù chùfā CI de yīxiē pipeline de gōngnéng. Bǐrú wǒmen wéi yīgè kāifā rènwù xiěle yīgè issue, kāifā rényuán kāifā wánliǎo PR guòlái, nàme wǒmen kěndìng xīwàng pǎo yīxià cèshì yònglì zài juédìng merge bù merge. Cǐ shí jiù kěyǐ zài issue xià huífù: /Promote 42 test key=value ránhòu jīqìrén jiù huì qù chùfā drone de shìjiàn, zhíxíng drone pipeline zhōng mùbiāo wèi test de bùzhòu, lái wánchéng cèshì yònglì yùnxíng, dāngrán jùtǐ zěnme cèshì huì yóu pipeline zìjǐ juédìng ```golang // hello shìgè http handler, github bǎ shìjiàn shùjù yǐ json géshì fǎ sòng guòlái, yǐjīng bèi jiěxī dào event jiégòu tǐ zhōng func promote(ctx context.Context, event issue.IssueCommentEvent) (string, error) { // or using env: GITHUB_USER GITHUB_PASSWD // github zhànghù mínghé mìmǎ, yīnwèi jīqìrén kěnéng hái yào huífù issue shénme de cāozuò, zhèlǐ jiànyì dāndú gěi jīqìrén shēnqǐng gè zhànghào // bù chuán cānshù jiù huì cóng huánjìng biànliàng zhōng dòu qǔ config:= Issue.NewConfig("sealrobot", "xxx") // regist what robot your need, and the robot config // zhùcè yīxià nǐ xīwàng nǎge jīqìrén chǔlǐ, yīn wéi yītiáo issue zhōng kěnéng huì yǒu hěn zuò zhǐlìng, wǒmen zhǐ guānxīn/promote jí kě // Drone de chǔlǐ qì xūyào zhīdào drone dì dìzhǐ hé token shì shénme issue.Regist("promote", &drone_promote.DronePromote{"https://Cloud.Drone.Io", "QSp93SmhZVpJAmb7tWPuWIOh3qs6BhuI"}) // chǔlǐ issue err:= Issue.Process(config, event) return fmt.Sprintf("goversionecho%s", err), nil } ``` ## kuòzhǎn chǔlǐ qì chǔlǐ qì jiùshì wèile chǔlǐ issue zhōng yǒu zìjǐ gǎn xìngqù de zhǐlìng. Zhǐyào shíxiàn rúxià jiēkǒu jí kě ```golang type Robot interface { Process(event IssueEvent) error } ``` zhùyì yào xiǎng Processor shēngxiào bìxū yào zhùcè chǔlǐ qì issue.Regist(mìnglìng, chǔlǐ qì) kěyǐ cānkǎo [drone-promote de shíxiàn](https://Github.Com/fanux/robot/blob/master/processor/drone_promote/drone_promote.Go) ## yǒuqíng liànjiē [sealos-yī jiàn ānzhuāng kubernetes HA jíqún](https://Github.Com/fanux/sealos)
+展开
+2399 / 5000
+翻译结果
 # github robot
-根据github的一些事件去触发处理一些事
+Trigger and process some things according to some events on github
 
-处理issue中的一些诸如`/pay 100`的指令，可以自定义指令和注册指令的处理器。
+To process some instructions in the issue, such as `/pay 100`, you can customize the instructions and register the instructions of the processor.
 
-使用场景：
+scenes to be used:
 
-> 自动回复issue
+> Auto reply to issue
 
-比如issue一天没回复，自动回复以让提issue的人莫着急
+For example, if there is no reply to the issue in one day, the automatic reply will make the person who raised the issue not anxious.
 
-> 自动提醒
+> Automatic reminder
 
-如kubernetes中/sig 指令会把消息推到对应的兴趣小组
+For example, the /sig command in kubernetes will push the message to the corresponding interest group
 
-> 自动化测试
+> Automated Testing
 
 `/test e2e test/test.sh`
 
-> 触发drone promote事件
+> Trigger drone promote event
 
-`/promote 42 test` 在issue里回复这个，就会触发CI/CD里面下面定义的一个pipeline
+If `/promote 42 test` responds to this in the issue, it will trigger a pipeline defined below in CI/CD
 
 ```
-# 42 is the build number 
+# 42 is the build number
 # drone build promote fanux/sealos 42 test
-- name: e2etest
+-name: e2etest
   image: golang:1.12
   commands:
-    - echo "this is sealos test"
+    -echo "this is sealos test"
   when:
     event:
-    - promote
+    -promote
     target:
-    - test
+    -test
 ```
 
 ```
-    github     robot     drone
- issue |         |         |
------->| event   |         |
-       |-------->|         |
-       |         | promote |
-       |         |-------->|
-       |         |         | do what ever you want
-       |         |         |
-       V         V         V
+    github robot drone
+ issue | | |
+------>| event | |
+       |-------->| |
+       | | promote |
+       | |-------->|
+       | | | do what ever you want
+       | | |
+       V V V
 ```
 
-> 自动merge代码
+> Automatic merge code
 
-`/merge` 指令可以自动merge代码，还可以在merge之前之后做一些事，比如记录下PR的作者，发邮件，等等
+The `/merge` command can automatically merge the code, and can also do some things before and after the merge, such as recording the author of the PR, sending an email, etc.
 
-> 付款
+> Payment
 
-[sealos](https://github.com/fanux/sealos)的开发者是会有一定酬劳的，maintainer会把任务分解写成issue, 然后加个 `/pay 100`指令
-机器会首先会自动给这个issue打上`paid`标签，然后开发者开发代码PR，一旦被merge就会自动把钱转入该开发者的支付宝账户。
+[sealos](https://github.com/fanux/sealos) developers will be paid a certain amount, the maintainer will break down the task into issues, and then add a `/pay 100` command
+The machine will first automatically tag the issue with the `paid` label, and then the developer develops the code PR, and once it is merged, it will automatically transfer the money to the developer's Alipay account.
 
-> 其它
+> Other
 
-打标签，关闭超时issue等，
+Tagging, closing timeout issues, etc.,
 
-## 使用事例
+## Use case
 
-这里使用一个faas跑一个机器人的例子帮助大家理解。 这个机器人是监听issue然后去触发CI的一些pipeline的功能。
+Here is an example of faas running a robot to help everyone understand. This robot monitors the issue and then triggers some pipeline functions of CI.
 
-比如我们为一个开发任务写了一个issue,开发人员开发完了PR过来，那么我们肯定希望跑一下测试用例再决定merge不merge。
+For example, if we write an issue for a development task, and the developer has finished developing the PR, we definitely hope to run the test case before deciding whether to merge or merge.
 
-此时就可以在issue下回复：
+At this point, you can reply under the issue:
 
 /promote 42 test key=value
 
-然后机器人就会去触发drone的事件，执行drone pipeline中目标为test的步骤，来完成测试用例运行，当然具体怎么测试会由pipeline自己决定
+Then the robot will trigger the drone event and execute the step of the drone pipeline with the goal of test to complete the test case operation. Of course, the specific test will be determined by the pipeline itself.
 
 ```golang
-// hello是个http handler, github 把事件数据以json格式发送过来，已经被解析到event结构体中
+// hello is an http handler, github sends the event data in json format, which has been parsed into the event structure
 func promote(ctx context.Context, event issue.IssueCommentEvent) (string, error) {
     // or using env: GITHUB_USER GITHUB_PASSWD
-    // github 账户名和密码，因为机器人可能还要回复issue什么的操作，这里建议单独给机器人申请个账号
-    // 不传参数就会从环境变量中读取
+    // github account name and password, because the robot may have to reply to issues or other operations, it is recommended to apply for an account for the robot separately
+    // Without passing parameters, it will be read from environment variables
     config := issue.NewConfig("sealrobot", "xxx")
     // regist what robot your need, and the robot config
-    // 注册一下你希望哪个机器人处理，因为一条issue中可能会有很做指令，我们只关心/promote即可
-    // Drone的处理器需要知道drone的地址和token是什么
+    // Register which robot you want to handle, because there may be a lot of instructions in an issue, we only care about /promote
+    // Drone's processor needs to know the address and token of the drone
     issue.Regist("promote", &drone_promote.DronePromote{"https://cloud.drone.io", "QSp93SmhZVpJAmb7tWPuWIOh3qs6BhuI"})
-    // 处理issue
+    // deal with issue
     err := issue.Process(config, event)
     return fmt.Sprintf("goversionecho %s", err), nil
 }
 ```
 
-## 扩展处理器
+## Extended processor
 
-处理器就是为了处理issue中有自己感兴趣的指令。只要实现如下接口即可
+The processor is to process the instructions of interest in the issue. Just implement the following interface
 ```golang
 type Robot interface {
-	Process(event IssueEvent) error
+Process(event IssueEvent) error
 }
 ```
-注意要想Processor生效必须要注册处理器 issue.Regist(命令,处理器)
+Note that for Processor to take effect, you must register the processor issue.Regist (command, processor)
 
-可以参考[drone-promote的实现](https://github.com/fanux/robot/blob/master/processor/drone_promote/drone_promote.go)
-
-## 友情链接
-[sealos-一键安装kubernetes HA集群](https://github.com/fanux/sealos)
+You can refer to [Implementation of drone-promote](https://github.com/fanux/robot/blob/master/processor/drone_promote/drone_promote.go)
