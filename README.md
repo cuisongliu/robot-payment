@@ -15,9 +15,10 @@ Exclusive account Wallet.
 6. Bob withdraws 10 DOT tokens from our platform to his wallet(such as Polkawallet or MetaMask)
 
 # github payment robot
+
 Trigger and process some things according to some events on github
 
-To process some instructions in the issue, such as `/pay 100`, you can customize the instructions and register the instructions of the processor.
+To process some instructions in the issue, such as `/pay 100DOT`, you can customize the instructions and register the instructions of the processor.
 
 scenes to be used:
 
