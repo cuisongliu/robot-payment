@@ -51,18 +51,6 @@ If `/promote 42 test` responds to this in the issue, it will trigger a pipeline 
     -test
 ```
 
-```
-    github robot drone
- issue | | |
------->| event | |
-       |-------->| |
-       | | promote |
-       | |-------->|
-       | | | do what ever you want
-       | | |
-       V V V
-```
-
 > Automatic merge code
 
 The `/merge` command can automatically merge the code, and can also do some things before and after the merge, such as recording the author of the PR, sending an email, etc.
